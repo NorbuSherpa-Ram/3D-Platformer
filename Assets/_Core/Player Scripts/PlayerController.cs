@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("COMPONENT INFO")]
     public Animator m_Animator { get; private set; }
     public CharacterController m_CharacterController { get; private set; }
-
+    public PlayerSoundManager soundManager { get; private set; }
 
     [Space(20)]
     [Header("MOVEMENT INFO")]
@@ -24,7 +25,6 @@ public class PlayerController : MonoBehaviour
     public bool canCayoteJump { get; private set; }
     public float cayoteTimeDuration = 0.2f;
     public float jumpBufferDuration = .2f;
-
 
 
     [Space(20)]
@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 wallJumpForce = new Vector3(10, 15f);
     public float wallJumpMovementCD = 0.5f;
 
+    public float rotateSpeed = 5f; //SEED OF ROTATAION TOWARD MOVING 
+
 
     [Space(20)]
     [Header("CELLING INFO")]
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsCelling;
     public float cellingCheckRange = 2;
 
-    private RaycastHit leftWallHitInfo;
+    private RaycastHit leftWallHitInfo; //STORE HIT INFO 
     private RaycastHit rightWallHitInfo;
 
     [Space(20)]
@@ -67,13 +69,14 @@ public class PlayerController : MonoBehaviour
     public float slideCooldownTime = 10f;
     private float lastSlideTime;
     public float characterDefaultHeght { get; private set; }
+    //HEIGHT OF CHARACTER COLLIDER/CHARACTERCONTOLLER ON DASH  SO THAT PLAYER PASS THROUGH SMALL GAPS 
     public float slidingCharacterHeight = 0.7f;
     public Vector3 characterDefaultCenter { get; private set; }
     public Vector3 slidingCharacterCenter = new Vector3(0, 0.35f, 0);
 
 
     [Space(20)]
-    [Header("FEEDBACK INFO ")]
+    [Header("FEEDBACK INFO ")] //MORE MOUNTAIN FEEL FEED BACK THAT GET TRIGGER ON EVENT SUCH AS DASH ETC 
     [SerializeField] private MMF_Player dashFeedback;
     [SerializeField] private MMF_Player slideFeedback;
     public MMF_Player runFeedback;
@@ -89,8 +92,7 @@ public class PlayerController : MonoBehaviour
     [Space(5)]
     public SoundData dahsSfx;
     public SoundData slideSfx;
-    [Space(5)]
-    public PlayerSoundManager soundManager;
+
 
 
     #region EVENTS INFO 
@@ -121,6 +123,7 @@ public class PlayerController : MonoBehaviour
         #region COMPONENT INITIALIZATION 
         m_Animator = GetComponentInChildren<Animator>();
         m_CharacterController = GetComponent<CharacterController>();
+        soundManager = GetComponent<PlayerSoundManager>();
         #endregion
 
         characterDefaultCenter = m_CharacterController.center;
@@ -129,6 +132,7 @@ public class PlayerController : MonoBehaviour
         #region STATE INITIALIZATION 
         stateMachine = new PlayerStateMachine();
 
+        //PARAM  PLAYER REFERANCE , STATEMACHINE AND ANIMATION TO PLAY 
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         walkState = new PlayerWalkState(this, stateMachine, "Walk");
         runState = new PlayerRunState(this, stateMachine, "Run");
@@ -156,7 +160,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    //CUSTOM GRAVITY ALSO USED FOR JUMPE AND DASH , SLIDE BY SETTING VELOCITY 
+    //CUSTOM GRAVITY ALSO USED FOR JUMPE ,  DASH , SLIDE BY SETTING VELOCITY 
     private void ApplyGravity()
     {
         if (IsPlayergrounded() && velocity.y < 0.2f)
@@ -168,11 +172,36 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+    //TO MOVE 
     public void ApplyVelocity(Vector3 moveDirection)
     {
         m_CharacterController.Move(moveDirection * Time.deltaTime);
     }
 
+
+    //TO ROTATE PLAYER TO WARD MOVING DIRECTION 
+    public void PlayerLookAtRotation(Vector3 moveDir)
+    {
+        if (moveDir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+        }
+    }
+
+    public Vector3 GetCameraForward()
+    {
+        Vector3 camForward = Camera.main.transform.forward;
+        camForward.y = 0f;
+        return camForward;
+    }
+    public Vector3 GetCameraRight()
+    {
+        Vector3 camRight = Camera.main.transform.right;
+        camRight.y = 0f;
+        return camRight;
+    }
 
 
 
@@ -189,24 +218,6 @@ public class PlayerController : MonoBehaviour
 
     public void AllowCayoteJump() => canCayoteJump = true;
     public void ResetCayoteJump() => canCayoteJump = false;
-
-
-
-
-
-    public Vector3 GetCameraForward()
-    {
-        Vector3 camForward = Camera.main.transform.forward;
-        camForward.y = 0f;
-        return camForward;
-    }
-    public Vector3 GetCameraRight()
-    {
-        Vector3 camRight = Camera.main.transform.right;
-        camRight.y = 0f;
-        return camRight;
-    }
-
 
 
     #region SKILL COOLDOWN INFO 
@@ -241,6 +252,7 @@ public class PlayerController : MonoBehaviour
 
 
 
+    //RETURN EVENT ARGS CLASS FOR SKILL DATA SUCH  AS CD 
     private SkillEventData GetSkillData(float cooldownValue)
     {
         SkillEventData args = new SkillEventData();

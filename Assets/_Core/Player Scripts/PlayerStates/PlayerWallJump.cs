@@ -27,7 +27,7 @@ public class PlayerWallJump : PlayerWallState
             playerStateMachine.ChangeState(player.fallingState);
         }
 
-        //STOP MOVEMENT IF I JUST JUMPED 
+        //STOP MOVEMENT IF I JUST JUMPED SO THAT IT WILL NOT GO  TO WALL RUN  STATE IMMEDIATELY 
         if (CanMove())
         {
             if ((player.IsTouchingLeftWall() || player.IsTouchingRightWall()) && !player.IsPlayergrounded() && yInput > 0)
@@ -62,9 +62,8 @@ public class PlayerWallJump : PlayerWallState
         Vector3 moveDir = (camForward * yInput + camRight * xInput).normalized;
 
         if (moveDir.magnitude > 0.1f)
-        {
-            player.transform.forward = moveDir;
-        }
+            player.PlayerLookAtRotation(moveDir);
+
         Vector3 movePower = moveDir * player.airMoveSpeed;
         player.ApplyVelocity(movePower);
     }

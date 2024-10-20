@@ -27,9 +27,9 @@ public class PlayerRunState : PlayerGroundedState
         Vector3 moveDir = (player.GetCameraForward() * yInput + player.GetCameraRight() * xInput).normalized;
 
         if (moveDir.magnitude > 0.1f)
-        {
-            player.transform.forward = moveDir;
-        }
+            player.PlayerLookAtRotation(moveDir);
+
+
         Vector3 movePower = moveDir * player.runSpeed;
         player.ApplyVelocity(movePower);
 

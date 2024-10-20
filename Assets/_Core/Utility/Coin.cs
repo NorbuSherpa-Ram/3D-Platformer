@@ -12,6 +12,7 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
+        //APPLY ROTATION ON LOOP USING DOTWEEN 
         transform.DORotate(rotationAxis, rotationDuration, RotateMode.FastBeyond360)
            .SetEase(Ease.Linear)
            .SetLoops(-1, LoopType.Restart);

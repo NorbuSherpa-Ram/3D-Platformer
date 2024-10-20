@@ -13,7 +13,6 @@ public class PlayerJumpState : PlayerAirState
         player.velocity.y = 0;
         player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
         player.soundManager.PlayOneShotSFX(player.jumpingSfx);
-
     }
 
     public override void Update()

@@ -1,4 +1,8 @@
 using UnityEngine;
+/// <summary>
+/// SUPER STATE FOR IDLE , WALK AND RUN  
+/// MAINLY RESPONSIBLE FOR TAKING INPUT DURING GROUNDED STATE 
+/// </summary>
 public class PlayerGroundedState : PlayerState
 {
     protected bool running;

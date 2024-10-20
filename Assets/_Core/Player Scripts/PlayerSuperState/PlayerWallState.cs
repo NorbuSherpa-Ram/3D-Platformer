@@ -1,5 +1,9 @@
 using UnityEngine;
-
+/// <summary>
+/// SUPER STATE FOR IDLE , WALK AND RUN  
+/// MAINLY RESPONSIBLE FOR TAKING INPUT DURING GROUNDED STATE 
+/// AND CHECK CAN GOTO WALL RUN STATE AS  WELL 
+/// </summary>
 public class PlayerWallState : PlayerState
 {
     protected Vector3 wallNormal;

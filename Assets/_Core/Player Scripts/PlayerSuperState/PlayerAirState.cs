@@ -1,12 +1,15 @@
-
-
 using UnityEngine;
+
+
+/// <summary>
+/// SUPER CLASS FOR JUMP AND  FALLING CLASS 
+/// MAINLY RESPONSIBLE FOR TAKING INPUT DURING AIR STATE 
+/// </summary>
 
 public class PlayerAirState : PlayerState
 {
-    //TREEACJ COYOTE TIME AND JUMP BUFFER 
-    private float coyoteTimeCounter; 
-    private float jumpBufferCounter;
+    private float cayoteTimer;
+    private float jumpBufferTimer;
 
 
     public PlayerAirState(PlayerController _player, PlayerStateMachine _playerStateMachine, string _animBoolName) : base(_player, _playerStateMachine, _animBoolName)
@@ -16,7 +19,7 @@ public class PlayerAirState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        coyoteTimeCounter = player.cayoteTimeDuration; // Start coyote time when entering air state
+        cayoteTimer = player.cayoteTimeDuration; // Start coyote timer when entering air state
     }
 
     public override void Update()
@@ -29,25 +32,20 @@ public class PlayerAirState : PlayerState
         if ((player.IsTouchingLeftWall() || player.IsTouchingRightWall()) && !player.IsPlayergrounded() && yInput > 0)
             playerStateMachine.ChangeState(player.wallRunState);
 
-
-
-        if (player.IsPlayergrounded() && jumpBufferCounter <= 0)
+        if (player.IsPlayergrounded() && jumpBufferTimer <= 0)
         {
             player.soundManager.PlayOneShotSFX(player.landSfx);
             playerStateMachine.ChangeState(player.idleState);
-
         }
-
-
-        //if (player.IsPlayergrounded())
-        //{
-        //    player.soundManager.PlayOneShotSFX(player.landSfx);
-        //    playerStateMachine.ChangeState(player.idleState);
-        //}
-
     }
 
-    protected  void Move()
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+    //ALLOW AIR MOVEMNET    
+    protected void Move()
     {
         Vector3 camForward = Camera.main.transform.forward;
         Vector3 camRight = Camera.main.transform.right;
@@ -58,40 +56,41 @@ public class PlayerAirState : PlayerState
         Vector3 moveDir = (camForward * yInput + camRight * xInput).normalized;
 
         if (moveDir.magnitude > 0.1f)
-        {
-            player.transform.forward = moveDir;
-        }
+            player.PlayerLookAtRotation(moveDir);
+
         Vector3 movePower = moveDir * player.airMoveSpeed;
         player.ApplyVelocity(movePower);
     }
 
+
+
+    /// <summary>
+    /// CHEECK FOR  CAYOTE AND  JUMP BUFFER TIMER 
+    /// </summary>
     private void CayoteJumpAndJumpBuffer()
     {
-        if (coyoteTimeCounter > 0)
-            coyoteTimeCounter -= Time.deltaTime;
+        if (cayoteTimer > 0)
+            cayoteTimer -= Time.deltaTime;
 
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (coyoteTimeCounter > 0 && player.canCayoteJump)
+            if (cayoteTimer > 0 && player.canCayoteJump)
             {
                 playerStateMachine.ChangeState(player.jumpState);
                 //DO NOT ALLOW CAYOTE JUMP ONCE USED TILL IT RESET 
                 player.ResetCayoteJump();
             }
             else
-                jumpBufferCounter = player.jumpBufferDuration;
+                jumpBufferTimer = player.jumpBufferDuration;
         }
 
 
-        jumpBufferCounter -= Time.deltaTime;
+        jumpBufferTimer -= Time.deltaTime;
 
-        if (player.IsPlayergrounded() && jumpBufferCounter > 0)
+        if (player.IsPlayergrounded() && jumpBufferTimer > 0)
             playerStateMachine.ChangeState(player.jumpState);
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
+
 }

@@ -20,9 +20,9 @@ public class PlayerWalkState : PlayerGroundedState
         Vector3 moveDir = (player.GetCameraForward() * yInput + player.GetCameraRight() * xInput).normalized;
 
         if (moveDir.magnitude > 0.1f)
-        {
-            player.transform.forward = moveDir;
-        }
+            player.PlayerLookAtRotation(moveDir);
+
+
         Vector3 movePower = moveDir * player.walkSpeed;
         player.ApplyVelocity(movePower);
 
@@ -30,6 +30,8 @@ public class PlayerWalkState : PlayerGroundedState
         if (xInput == 0 && yInput == 0)
             playerStateMachine.ChangeState(player.idleState);
     }
+
+
 
     public override void Exit()
     {

@@ -1086,7 +1086,7 @@ Transform:
   m_GameObject: {fileID: 731534077475015606}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.051, z: -0.041}
+  m_LocalPosition: {x: 0, y: -0.002, z: -0.041}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2821,10 +2821,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   runSpeed: 10
-  airMoveSpeed: 10
+  airMoveSpeed: 5
   gravity: -9.81
   jumpHeight: 2
   velocity: {x: 0, y: 0, z: 0}
+  cayoteTimeDuration: 0.2
+  jumpBufferDuration: 0.2
   groundCheck: {fileID: 3091984879153072726}
   groundCheckRadius: 0.08
   whatIsGroudLayer:
@@ -2836,7 +2838,8 @@ MonoBehaviour:
     m_Bits: 2048
   wallCheckRange: 0.65
   wallJumpForce: {x: 6, y: 8, z: 0}
-  wallRunCD: 0.5
+  wallJumpMovementCD: 0.5
+  rotateSpeed: 15
   cellingCheckPoint: {fileID: 5019799401069129097}
   whatIsCelling:
     serializedVersion: 2

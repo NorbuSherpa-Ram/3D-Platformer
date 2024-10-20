@@ -13,7 +13,6 @@ public class PlayerSlideState : PlayerState
         characterController.height = player.slidingCharacterHeight;
         stateTimer = player.slideDuration;
 
-
         player.soundManager.PlayOneShotSFX(player.slideSfx);
 
         player.Slide();
