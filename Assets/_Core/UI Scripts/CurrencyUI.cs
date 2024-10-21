@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// RESPONSIBLE FOR SHOWING IN  COIN COUNT IN GAME UI  
 /// </summary>
+
 public class CurrencyUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coinText;
@@ -16,6 +17,8 @@ public class CurrencyUI : MonoBehaviour
 
         if (currencyManager != null)
             currencyManager.OnCoinUpdate += CurrencyManager_OnCoinUpdate;
+
+        UpdateCoinText();
     }
 
     //CURRENCY MANAGER EVENT
@@ -26,7 +29,7 @@ public class CurrencyUI : MonoBehaviour
 
     private void UpdateCoinText()
     {
-        coinText.text = $"Coin Count : {currencyManager.GetCoinCount().ToString()}";
+        coinText.text = $"Coin : {currencyManager.GetCoinCount().ToString()}";
     }
 
     private void OnDestroy()

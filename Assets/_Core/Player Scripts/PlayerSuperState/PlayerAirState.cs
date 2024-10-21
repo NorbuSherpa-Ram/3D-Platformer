@@ -20,6 +20,7 @@ public class PlayerAirState : PlayerState
     {
         base.Enter();
         cayoteTimer = player.cayoteTimeDuration; // Start coyote timer when entering air state
+        Debug.Log(" Enter Air State");
     }
 
     public override void Update()
@@ -34,6 +35,8 @@ public class PlayerAirState : PlayerState
 
         if (player.IsPlayergrounded() && jumpBufferTimer <= 0)
         {
+            Debug.Log("Enter Enter Idle State  State ");
+
             player.soundManager.PlayOneShotSFX(player.landSfx);
             playerStateMachine.ChangeState(player.idleState);
         }

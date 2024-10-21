@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a22bb3ffe8b46f4ea80268d822c527e, type: 3}
-  m_Name: SFX Land
+  m_Name: SFX Coin Collect
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: e665bbcb247cdb544bfab97c860796c9, type: 3}
+  clip: {fileID: 8300000, guid: cb1351b69866d47b6bdd382d752086b6, type: 3}
   volume: 1
   ranPitch: 1
-  minMaxPitch: {x: 0.7, y: 0.9}
-  loop: 0
+  minMaxPitch: {x: 0.9, y: 1.1}
+  loop: 1

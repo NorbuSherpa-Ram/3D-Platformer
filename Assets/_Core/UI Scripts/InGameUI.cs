@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private PlayerController playerController;
 
     [SerializeField] private TextMeshProUGUI playerSpeedText;
+
+
 
 
     private float smoothedSpeed;

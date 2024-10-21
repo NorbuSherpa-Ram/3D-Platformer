@@ -1086,7 +1086,7 @@ Transform:
   m_GameObject: {fileID: 731534077475015606}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.002, z: -0.041}
+  m_LocalPosition: {x: 0, y: -0.073, z: 0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2752,6 +2752,7 @@ GameObject:
   - component: {fileID: 4550261963501152460}
   - component: {fileID: 1015239056289563573}
   - component: {fileID: 463143237188091620}
+  - component: {fileID: 239800059826157867}
   m_Layer: 0
   m_Name: 'Player '
   m_TagString: Untagged
@@ -2823,12 +2824,12 @@ MonoBehaviour:
   runSpeed: 10
   airMoveSpeed: 5
   gravity: -9.81
-  jumpHeight: 2
+  jumpHeight: 3
   velocity: {x: 0, y: 0, z: 0}
   cayoteTimeDuration: 0.2
   jumpBufferDuration: 0.2
   groundCheck: {fileID: 3091984879153072726}
-  groundCheckRadius: 0.08
+  groundCheckRadius: 0.2
   whatIsGroudLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -2862,7 +2863,6 @@ MonoBehaviour:
   landSfx: {fileID: 11400000, guid: e07c1025347aaaf45940e3f558d54ff8, type: 2}
   dahsSfx: {fileID: 11400000, guid: 49356579e4f1d9f44bf60ee6b7caac65, type: 2}
   slideSfx: {fileID: 11400000, guid: 49356579e4f1d9f44bf60ee6b7caac65, type: 2}
-  soundManager: {fileID: 463143237188091620}
 --- !u!114 &463143237188091620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2880,6 +2880,20 @@ MonoBehaviour:
   - {fileID: 6730755624968716639}
   - {fileID: 5145150358086283814}
   - {fileID: 3778205780283244141}
+--- !u!114 &239800059826157867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098121537836817995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffc22c6184418742a826ef96e898412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  invensible: 0
 --- !u!1 &2117948249464900102
 GameObject:
   m_ObjectHideFlags: 0
@@ -11868,7 +11882,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8389483509785823094}
   - component: {fileID: 2489718844226395404}
-  - component: {fileID: 4378798242484063891}
   m_Layer: 0
   m_Name: Pico Chan Animator
   m_TagString: Untagged
@@ -11916,22 +11929,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4378798242484063891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9162219816213831116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951bbf321f7e49f4294fa26d2612a23b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpSFX: {fileID: 11400000, guid: a52a4305fd0273342a53778ef0481ef1, type: 2}
-  runnignSfx: {fileID: 0}
-  walkingSfx: {fileID: 11400000, guid: 91595fa94be2c7748805d6949d3e0a50, type: 2}
-  landSfx: {fileID: 11400000, guid: e07c1025347aaaf45940e3f558d54ff8, type: 2}
 --- !u!1 &9167462135056090692
 GameObject:
   m_ObjectHideFlags: 0
@@ -12336,7 +12333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5997695144904221831, guid: 3f32242eb5afd2f4a82f535c3cd94611, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

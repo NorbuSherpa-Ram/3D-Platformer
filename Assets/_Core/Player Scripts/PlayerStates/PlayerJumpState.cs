@@ -13,6 +13,9 @@ public class PlayerJumpState : PlayerAirState
         player.velocity.y = 0;
         player.velocity.y = Mathf.Sqrt(player.jumpHeight * -2f * player.gravity);
         player.soundManager.PlayOneShotSFX(player.jumpingSfx);
+
+
+        Debug.Log("Enter Jump State ");
     }
 
     public override void Update()
@@ -21,10 +24,12 @@ public class PlayerJumpState : PlayerAirState
 
         if (characterController.velocity.y < 0)
             playerStateMachine.ChangeState(player.fallingState);
+
     }
 
     public override void Exit()
     {
         base.Exit();
+
     }
 }

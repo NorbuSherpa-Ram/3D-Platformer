@@ -156,6 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         stateMachine.ExecuteState();
         ApplyGravity();
+        Debug.Log(IsPlayergrounded());
     }
 
 
@@ -163,8 +164,8 @@ public class PlayerController : MonoBehaviour
     //CUSTOM GRAVITY ALSO USED FOR JUMPE ,  DASH , SLIDE BY SETTING VELOCITY 
     private void ApplyGravity()
     {
-        if (IsPlayergrounded() && velocity.y < 0.2f)
-            velocity.y = -0.2f;
+        if (IsPlayergrounded() && velocity.y < -0.5f)
+            velocity.y = -0.5f;
         else
             velocity.y += gravity * Time.deltaTime;
 
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public bool IsPlayergrounded() => Physics.CheckSphere(groundCheck.position, groundCheckRadius);
+    public bool IsPlayergrounded() => Physics.CheckSphere(groundCheck.position, groundCheckRadius, whatIsGroudLayer);
     public bool IsTouchingCelling() => Physics.Raycast(cellingCheckPoint.position, Vector3.up, cellingCheckRange, whatIsCelling);
 
     public bool IsTouchingLeftWall() => Physics.Raycast(wallCheckPoint.position, Vector3.left, out leftWallHitInfo, wallCheckRange, whatIsWall);
@@ -237,14 +238,14 @@ public class PlayerController : MonoBehaviour
     public void Dash()
     {
         lastDashTimer = Time.time;
-        OnDash?.Invoke(this, GetSkillData(dashCooldownTime));
+        OnDash?.Invoke(this, GetSkillData(dashCooldownTime, dashDuration));
         dashFeedback?.PlayFeedbacks();
     }
 
     public void Slide()
     {
         lastSlideTime = Time.time;
-        OnSlide?.Invoke(this, GetSkillData(slideCooldownTime));
+        OnSlide?.Invoke(this, GetSkillData(slideCooldownTime, slideDuration));
         slideFeedback?.PlayFeedbacks();
     }
 
@@ -253,10 +254,11 @@ public class PlayerController : MonoBehaviour
 
 
     //RETURN EVENT ARGS CLASS FOR SKILL DATA SUCH  AS CD 
-    private SkillEventData GetSkillData(float cooldownValue)
+    private SkillEventData GetSkillData(float cooldownValue, float skillDuration)
     {
         SkillEventData args = new SkillEventData();
         args.coolDownTime = cooldownValue;
+        args.skillDuration = skillDuration;
         return args;
     }
 
@@ -279,4 +281,5 @@ public class PlayerController : MonoBehaviour
 public class SkillEventData : EventArgs
 {
     public float coolDownTime;
+    public float skillDuration;
 }

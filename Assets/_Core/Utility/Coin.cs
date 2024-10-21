@@ -9,6 +9,8 @@ public class Coin : MonoBehaviour
     public float rotationDuration = 1f;
     public Vector3 rotationAxis = new Vector3(0, 360, 0);
 
+    [SerializeField] private SoundData collectSound;
+
 
     private void Start()
     {
@@ -23,6 +25,13 @@ public class Coin : MonoBehaviour
     {
         //PASS COIN VALUE AS EVENT ARGS IF DIFFRENT COIN HAVE DIFFRENT VALUE 
         OnAnyCoinCollect?.Invoke(this, EventArgs.Empty);
+        PlayClip();
         Destroy(this.gameObject);
     }
+
+    private void PlayClip()
+    {
+        AudioManager.instance.PlayOneShotSFX(collectSound);
+    }
+
 }

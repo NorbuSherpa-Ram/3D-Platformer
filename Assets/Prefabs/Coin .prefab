@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2254991968484546490}
   - component: {fileID: 4224649521471068711}
   - component: {fileID: 1079120973931414572}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: 'Coin '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationDuration: 1
   rotationAxis: {x: 0, y: 360, z: 0}
+  collectSound: {fileID: 11400000, guid: 09fd4b0608c2bf94badcc283aa396b21, type: 2}
 --- !u!135 &1079120973931414572
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ GameObject:
   - component: {fileID: 3669258718248782664}
   - component: {fileID: 8471471539026549508}
   - component: {fileID: 5521155250170131618}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +134,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1a5903867c8f0a4a8a94c3fe36dad11, type: 2}
+  - {fileID: 2100000, guid: ff43dc8741038c5449deb49456b1cb1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
